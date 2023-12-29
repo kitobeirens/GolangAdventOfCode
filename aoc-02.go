@@ -31,12 +31,13 @@ func processLine(s string, red int, blue int, green int) int {
     
     substring := s[5:]
     substrings :=  strings.Split(substring, ":")
-    gameid, err2:= strconv.Atoi(substrings[0])
-    if err2 != nil {
-        fmt.Println("error", err2)
-    }
+    // gameid, err2:= strconv.Atoi(substrings[0])
+    // if err2 != nil {
+    //     fmt.Println("error", err2)
+    // }
+    minRed, minBlue, minGreen := 0, 0, 0
     differentgames := strings.Split(substrings[1], ";")
-    for _, game := range  differentgames {
+    for _, game := range differentgames {
         colors := strings.Split(game, ",")
         for _, color := range colors {
             colorandnum := strings.Split(color, " ")
@@ -44,18 +45,18 @@ func processLine(s string, red int, blue int, green int) int {
             if err != nil {
                 fmt.Println("error", err)
             }
-            if(colorandnum[2] == "red" && num > red){
-                return -1
+            if(colorandnum[2] == "red" && num > minRed){
+                minRed = num
             }
 
-            if(colorandnum[2] == "blue" && num > blue){
-                return -1
+            if(colorandnum[2] == "blue" && num > minBlue){
+                minBlue = num
             }
 
-            if(colorandnum[2] == "green" && num > green){
-                return -1
+            if(colorandnum[2] == "green" && num > minGreen){
+                minGreen = num
             }
         }
     }
-    return gameid
+    return minRed*minGreen*minBlue
 }
